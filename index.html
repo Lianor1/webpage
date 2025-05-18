@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Citas - Gestión de citas y servicios">
+    <meta name="keywords" content="citas, servicios, reservas, sistema">
+    <title>VENTA DE ROPAS  :3  COMO ELLA  TE OLVIDO</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Menú principal">
+        <div class="nav-brand">
+            <span>VENTA DE ROPAS </span>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#"><i class="fas fa-plus-circle"></i> Agregar</a></li>
+            <li><a href="#"><i class="fas fa-trash-alt"></i> Eliminar</a></li>
+            <li><a href="login.html" id="cerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <!-- Slider Principal -->
+    <div class="swiper-container" role="region" aria-label="Carrusel de destacados">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://img.freepik.com/psd-premium/moda-ventas-redes-sociales-diseno-portada-webinar-facebook_671392-877.jpg?semt=ais_hybrid&w=740" alt="Vestido elegante">
+                <div class="slide-content">
+                    <h2> </h2>
+                    <p> </p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://cdn.dooca.store/100326/files/banner-vestido-de-festa-7.jpg?v=1707155622&webp=0" alt="Vestido de noche">
+                <div class="slide-content">
+                    <h2> </h2>
+                    <p> </p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://sarta-bguest.com/wp-content/uploads/2023/01/Banner-sarta-bguest-collage2.jpg" alt="Vestido de gala">
+                <div class="slide-content">
+                    <h2> </h2>
+                    <p> </p>
+                </div>
+            </div>
+        </div>
+        <!-- Agrega la paginación -->
+        <div class="swiper-pagination"></div>
+        <!-- Agrega los botones de navegación -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <!-- Categorías -->
+    <div class="categories" role="navigation" aria-label="Categorías de productos">
+        <div class="category-tabs" role="tablist">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-todo">Todo</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-hombres">Hombres</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-mujeres">Mujeres</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-niños">Niños</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-vestidos">Vestidos</button>
+        </div>
+    </div>
+
+    <main class="main-content" role="main">
+        <div class="products-container">
+            <!-- Panel Todo -->
+            <div class="panel-products" id="panel-todo" role="tabpanel">
+                <div class="products-grid">
+                    <!-- Los productos se cargarán dinámicamente aquí -->
+                </div>
+            </div>
+
+            <!-- Panel Hombres -->
+            <div class="panel-products" id="panel-hombres" role="tabpanel" hidden>
+                <div class="products-grid">
+                    <!-- Los productos de hombres se cargarán aquí -->
+                </div>
+            </div>
+
+            <!-- Panel Mujeres -->
+            <div class="panel-products" id="panel-mujeres" role="tabpanel" hidden>
+                <div class="products-grid">
+                    <!-- Los productos de mujeres se cargarán aquí -->
+                </div>
+            </div>
+
+            <!-- Panel Niños -->
+            <div class="panel-products" id="panel-niños" role="tabpanel" hidden>
+                <div class="products-grid">
+                    <!-- Los productos de niños se cargarán aquí -->
+                </div>
+            </div>
+
+            <!-- Panel Vestidos -->
+            <div class="panel-products" id="panel-vestidos" role="tabpanel" hidden>
+                <div class="products-grid">
+                    <!-- Los vestidos se cargarán aquí -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Template para productos -->
+    <template id="product-template">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="" alt="" loading="lazy">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title"></h3>
+                <p class="product-description"></p>
+                <div class="product-details">
+                    <span class="product-price">S/. </span>
+                    <div class="product-sizes">
+                        <label>Tallas:</label>
+                        <select class="size-selector">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="product-quantity">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="quantity-input">
+                    </div>
+                </div>
+                <button class="add-to-cart-btn">Agregar al Carrito</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
