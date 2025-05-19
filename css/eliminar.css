@@ -1,13 +1,27 @@
 .inventory-container {
     max-width: 1200px;
     margin: 2rem auto;
-    padding: 1rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .inventory-container h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 2rem;
+    margin: 1rem 0 2rem 0;
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid #3498db;
+}
+
+/* Asegurarse de que el contenedor principal tenga suficiente espacio */
+.main-content {
+    padding-top: 80px; /* Ajusta este valor según sea necesario */
+    min-height: 100vh;
 }
 
 .search-bar {
