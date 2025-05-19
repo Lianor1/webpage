@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Productos - VENTA DE ROPAS</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/eliminar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Menú principal">
+        <div class="nav-brand">
+            <span>VENTA DE ROPAS</span>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="agregar.html"><i class="fas fa-plus-circle"></i> Agregar</a></li>
+            <li><a href="#" class="active"><i class="fas fa-trash-alt"></i> Eliminar</a></li>
+            <li><a href="login.html" id="cerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="inventory-container">
+            <h1>Inventario de Productos a Eliminar</h1>
+            
+            <div class="search-bar">
+                <input type="text" id="searchProduct" placeholder="Buscar producto...">
+                <select id="filterCategory">
+                    <option value="">Todas las categorías</option>
+                    <option value="hombres">Hombres</option>
+                    <option value="mujeres">Mujeres</option>
+                    <option value="niños">Niños</option>
+                    <option value="vestidos">Vestidos</option>
+                </select>
+            </div>
+
+            <div class="inventory-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Tallas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryList">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de confirmación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirmar Eliminación</h2>
+            <p>¿Estás seguro de que deseas eliminar este producto?</p>
+            <div class="modal-actions">
+                <button id="confirmDelete" class="btn-delete">Eliminar</button>
+                <button id="cancelDelete" class="btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/eliminar.js"></script>
+</body>
+</html>
