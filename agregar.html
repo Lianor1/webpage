@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto - VENTA DE ROPAS</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/agregar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Menú principal">
+        <div class="nav-brand">
+            <span>VENTA DE ROPAS</span>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#" class="active"><i class="fas fa-plus-circle"></i> Agregar</a></li>
+            <li><a href="#"><i class="fas fa-trash-alt"></i> Eliminar</a></li>
+            <li><a href="login.html" id="cerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="form-container">
+            <h1>Agregar Nuevo Producto</h1>
+            <form id="agregarProductoForm" class="producto-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Producto:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio (S/.):</label>
+                    <input type="number" id="precio" name="precio" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoría:</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="">Seleccione una categoría</option>
+                        <option value="hombres">Hombres</option>
+                        <option value="mujeres">Mujeres</option>
+                        <option value="niños">Niños</option>
+                        <option value="vestidos">Vestidos</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen">URL de la Imagen:</label>
+                    <input type="url" id="imagen" name="imagen" required>
+                    <div class="imagen-preview" id="imagenPreview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tallas Disponibles:</label>
+                    <div class="tallas-container">
+                        <label><input type="checkbox" name="tallas" value="S"> S</label>
+                        <label><input type="checkbox" name="tallas" value="M"> M</label>
+                        <label><input type="checkbox" name="tallas" value="L"> L</label>
+                        <label><input type="checkbox" name="tallas" value="XL"> XL</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Agregar Producto</button>
+                    <button type="reset" class="btn-reset">Limpiar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/agregar.js"></script>
+</body>
+</html>
