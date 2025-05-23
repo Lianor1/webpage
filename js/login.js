@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (email === ADMIN_USER && password === ADMIN_PASSWORD) {
             // Guardar en sessionStorage que es un admin
             sessionStorage.setItem('userRole', 'admin');
-            window.location.href = 'index.html';
+            window.location.href = 'home.html';
             return;
         }
 
