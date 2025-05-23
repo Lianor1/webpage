@@ -3,9 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const navMenu = document.getElementById('navMenu');
 
     // Toggle del menú
-    menuToggle.addEventListener('click', function () {
+    menuToggle?.addEventListener('click', function () {
         navMenu.classList.toggle('active');
-        // Opcional: Animar el icono del menú
         this.querySelector('i').classList.toggle('fa-bars');
         this.querySelector('i').classList.toggle('fa-times');
     });
@@ -31,61 +30,141 @@ document.addEventListener('DOMContentLoaded', function () {
     // Verificar autenticación
     if (!sessionStorage.getItem('userRole')) {
         window.location.href = 'login.html';
+        return;
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        // Slider functionality
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.querySelector('.prev');
-        const nextBtn = document.querySelector('.next');
-        let currentSlide = 0;
-    
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
-            
-            // Actualizar los indicadores
-            const indicators = document.querySelectorAll('.indicator');
-            indicators.forEach(ind => ind.classList.remove('active'));
-            indicators[index].classList.add('active');
-        }
-    
-        // Función para el siguiente slide
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-    
-        // Auto-avance cada 5 segundos
-        setInterval(nextSlide, 5000);
-    
-        // Manejadores de eventos para los botones
+    // Slider functionality
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+        if (!slides.length) return;
+        
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+        
+        const indicators = document.querySelectorAll('.indicator');
+        indicators.forEach(ind => ind.classList.remove('active'));
+        indicators[index]?.classList.add('active');
+    }
+
+    function nextSlide() {
+        if (!slides.length) return;
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function startSlideShow() {
+        if (slideInterval) clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    // Inicializar slider
+    if (slides.length) {
+        showSlide(0);
+        startSlideShow();
+
         prevBtn?.addEventListener('click', () => {
             currentSlide = (currentSlide - 1 + slides.length) % slides.length;
             showSlide(currentSlide);
+            startSlideShow();
         });
-    
-        nextBtn?.addEventListener('click', nextSlide);
-    
-        // Manejadores de eventos para los indicadores
+
+        nextBtn?.addEventListener('click', () => {
+            nextSlide();
+            startSlideShow();
+        });
+
         document.querySelectorAll('.indicator').forEach((indicator, index) => {
             indicator.addEventListener('click', () => {
                 currentSlide = index;
                 showSlide(currentSlide);
+                startSlideShow();
             });
         });
-    });
+    }
 
-    // Category tabs
+    // Función para mostrar productos
+    function mostrarProductos(categoria) {
+        const todosLosProductos = categoria === 'todo'
+            ? [...Object.values(productos).flat()]
+            : productos[categoria] || [];
+
+        const contenedor = document.querySelector(`#panel-${categoria} .products-grid`);
+        const template = document.getElementById('product-template');
+
+        if (!contenedor || !template) return;
+
+        contenedor.innerHTML = '';
+
+        todosLosProductos.forEach(producto => {
+            const clone = template.content.cloneNode(true);
+            const img = clone.querySelector('img');
+            if (img) {
+                img.src = producto.imagen;
+                img.alt = producto.nombre;
+                img.loading = 'lazy'; // Mejora de rendimiento
+            }
+            clone.querySelector('.product-title')?.textContent = producto.nombre;
+            clone.querySelector('.product-description')?.textContent = producto.descripcion;
+            clone.querySelector('.product-price')?.textContent = `S/. ${producto.precio.toFixed(2)}`;
+
+            contenedor.appendChild(clone);
+        });
+    }
+
+    // Manejador de tabs
     const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(button => {
+        button.addEventListener('click', () => {
+            const categoria = button.textContent.toLowerCase();
+            const panel = document.getElementById(`panel-${categoria}`);
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            // Aquí puedes agregar la lógica para filtrar productos
+            // Ocultar todos los paneles y desactivar botones
+            document.querySelectorAll('.panel-products').forEach(p => p.hidden = true);
+            tabBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+
+            // Activar el botón y panel seleccionado
+            button.classList.add('active');
+            button.setAttribute('aria-selected', 'true');
+            if (panel) {
+                panel.hidden = false;
+                mostrarProductos(categoria);
+            }
         });
     });
+
+    // Cargar todos los productos al inicio
+    mostrarProductos('todo');
+
+    // Inicialización del Swiper (si existe)
+    const swiperContainer = document.querySelector('.swiper-container');
+    if (swiperContainer) {
+        new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            effect: 'fade',
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    }
 });
 
 // Datos de productos
@@ -421,78 +500,3 @@ const productos = {
 
     ]
 };
-
-// Función para mostrar productos
-function mostrarProductos(categoria) {
-    const todosLosProductos = categoria === 'todo'
-        ? [...Object.values(productos).flat()]
-        : productos[categoria];
-
-    const contenedor = document.querySelector(`#panel-${categoria} .products-grid`);
-    const template = document.getElementById('product-template');
-
-    contenedor.innerHTML = '';
-
-    todosLosProductos.forEach(producto => {
-        const clone = template.content.cloneNode(true);
-
-        clone.querySelector('img').src = producto.imagen;
-        clone.querySelector('img').alt = producto.nombre;
-        clone.querySelector('.product-title').textContent = producto.nombre;
-        clone.querySelector('.product-description').textContent = producto.descripcion;
-        clone.querySelector('.product-price').textContent = `S/. ${producto.precio.toFixed(2)}`;
-
-        contenedor.appendChild(clone);
-    });
-}
-
-// Manejador de tabs
-document.querySelectorAll('.tab-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        // Ocultar todos los paneles
-        document.querySelectorAll('.panel-products').forEach(panel => {
-            panel.hidden = true;
-        });
-
-        // Desactivar todos los botones
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-            btn.setAttribute('aria-selected', 'false');
-        });
-
-        // Activar el botón seleccionado
-        button.classList.add('active');
-        button.setAttribute('aria-selected', 'true');
-
-        // Mostrar el panel correspondiente
-        const categoria = button.textContent.toLowerCase();
-        const panel = document.getElementById(`panel-${categoria}`);
-        panel.hidden = false;
-
-        // Cargar los productos
-        mostrarProductos(categoria);
-    });
-});
-// Cargar todos los productos al inicio
-mostrarProductos('todo');
-
-// Inicialización del Swiper
-const swiper = new Swiper('.swiper-container', {
-    // Opciones de Swiper
-    slidesPerView: 1,
-    spaceBetween: 30,
-    loop: true,
-    effect: 'fade',
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-});
